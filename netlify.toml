@@ -1,0 +1,9 @@
+# Configuración de build del Resort Finder.
+# `npm run build` ejecuta primero sync-resorts.mjs, que regenera resorts.ts
+# desde Airtable (LEADS > PROPIEDADES > choosen), y después vite build.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"

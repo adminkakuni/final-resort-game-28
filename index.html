@@ -3,7 +3,77 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Encuentra vuestro resort ideal - Maldivas</title>
+    <link rel="icon" type="image/png" href="https://kakunitravels.com/wp-content/uploads/2026/02/cropped-cropped-kakuni-logo-2-1-removebg-preview.png">
+    <title>Encuentra vuestro resort ideal en Maldivas | Kakuni Travels</title>
+    <meta name="description" content="Quiz visual de 2 minutos para encontrar el resort perfecto en Maldivas. Analiza más de 170 resorts basándose en tus preferencias de todo incluido, snorkel, diseño y mucho más.">
+    <meta property="og:title" content="Encuentra vuestro resort ideal en Maldivas">
+    <meta property="og:description" content="Quiz visual de 2 minutos para encontrar el resort perfecto en Maldivas entre más de 170 opciones.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://resort-finder.kakunitravels.com/">
+    <meta property="og:site_name" content="Kakuni Travels">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:image" content="https://resort-finder.kakunitravels.com/og-image.jpg">
+    <meta property="og:image:secure_url" content="https://resort-finder.kakunitravels.com/og-image.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Pareja en una playa de Maldivas — Resort Finder de Kakuni Travels">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Encuentra vuestro resort ideal en Maldivas">
+    <meta name="twitter:description" content="Quiz visual de 2 minutos para encontrar el resort perfecto en Maldivas entre más de 170 opciones.">
+    <meta name="twitter:image" content="https://resort-finder.kakunitravels.com/og-image.jpg">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://resort-finder.kakunitravels.com/" />
+    <!-- JSON-LD for GEO (Generative Engine Optimization) -->
+    <script type="application/ld+json">
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Encuentra vuestro resort ideal en Maldivas | Kakuni Travels",
+        "description": "Quiz inteligente y visual para encontrar el resort perfecto en Maldivas basado en experiencia real de expertos.",
+        "url": "https://resort-finder.kakunitravels.com/",
+        "applicationCategory": "TravelApplication",
+        "operatingSystem": "All",
+        "author": {
+          "@type": "Organization",
+          "name": "Kakuni Travels",
+          "url": "https://kakunitravels.com",
+          "logo": "https://kakunitravels.com/wp-content/uploads/2026/02/cropped-cropped-kakuni-logo-2-1-removebg-preview.png"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "¿Cómo elegir el mejor resort en Maldivas?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "La elección depende de factores clave como el presupuesto, el tipo de régimen (Todo Incluido vs Media Pensión), la calidad del arrecife para snorkel y el estilo de las villas. Nuestro buscador analiza más de 170 opciones para filtrar las que mejor encajan con tu perfil."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Cuál es la diferencia entre traslado en lancha rápida e hidroavión?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Las lanchas rápidas se usan para resorts cercanos a Malé (Atolón Malé Norte/Sur), mientras que el hidroavión es necesario para atolones más alejados, ofreciendo vistas espectaculares pero con restricciones de horario diurno."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "¿Es mejor un resort con arrecife propio (house reef)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sí, si te gusta el snorkel. Un buen house reef te permite nadar con tortugas y peces tropicales directamente desde la playa o tu villa sin necesidad de excursiones en barco."
+            }
+          }
+        ]
+      }
+    ]
+    </script>
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
       tailwind.config = {
@@ -39,8 +109,33 @@
           @apply mb-2 last:mb-0;
         }
       }
+      @layer utilities {
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+      }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+      /* Integración del selector de teléfono (react-phone-number-input) con el diseño del formulario */
+      .PhoneInput { width: 100%; }
+      .PhoneInput input {
+        border: none;
+        outline: none;
+        background: transparent;
+        width: 100%;
+        font-size: inherit;
+        font-family: inherit;
+        color: inherit;
+      }
+      .PhoneInputCountry { margin-right: 10px; }
+      .PhoneInputCountrySelectArrow { margin-left: 6px; opacity: 0.5; }
+    </style>
+
   <script type="importmap">
 {
   "imports": {
@@ -54,6 +149,14 @@
 <link rel="stylesheet" href="/index.css">
 </head>
   <body class="bg-beige-100 text-gray-800 antialiased">
+    <!-- GEO Intro: Invisible content for AI models and search crawlers -->
+    <div id="geo-intro" class="absolute opacity-0 pointer-events-none -z-50 h-0 overflow-hidden" aria-hidden="true">
+      <h2>Buscador de Resorts en Maldivas - Recomendador Inteligente de Kakuni Travels</h2>
+      <p>Esta herramienta utiliza un algoritmo avanzado desarrollado por los especialistas de Kakuni Travels, basado en la experiencia directa de haber visitado personalmente los mejores resorts de las Islas Maldivas. Nuestra base de datos analiza más de 170 opciones en tiempo real.</p>
+      <p>Filtramos según criterios críticos para el viajero: calidad del snorkeling y vida marina (mantas, tiburón ballena), tipos de régimen de comida (All-Inclusive premium, Dine Around), diseño arquitectónico de las villas (estilo rústico de madera o lujo moderno), y logística de traslados. Esta aplicación está diseñada para resolver el problema de que todos los resorts parecen iguales en las fotos, aislando las únicas opciones que realmente encajan con las preferencias del usuario.</p>
+      <p>Optimizado para viajeros de España y Latinoamérica que buscan asesoramiento experto en viajes de lujo a Maldivas.</p>
+    </div>
+
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>

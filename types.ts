@@ -2,6 +2,7 @@ export interface Option {
   id: string; // 'A', 'B', 'C', etc.
   label: string;
   description?: string;
+  chip?: string;
   imageUrl?: string;
   isHighlighted?: boolean;
   hiddenIf?: {
@@ -39,6 +40,10 @@ export interface ContactInfo {
   email: string;
   phone: string;
   comments?: string;
+  trip_motive?: string;
+  trip_status?: string;
+  trip_month?: string;
+  trip_year?: string;
   privacyAccepted: boolean;
 }
 
@@ -50,6 +55,9 @@ export type QuizState = {
   results: Recommendation[] | null;
   error: string | null;
   hasFinished: boolean;
+  device_type?: string;
+  user_agent?: string;
+  client_ip_address?: string;
 };
 
 // Define the steps structure for navigation logic
@@ -64,20 +72,17 @@ export enum StepType {
 export interface Resort {
   id: string;
   name: string;
-  description: string;
-  imageUrl: string;
+  imageUrl?: string; // Foto del resort (WP media, versión 768px optimizada para móvil)
   // Matching criteria (arrays of option IDs they satisfy)
-  q_despreocupacion: string[]; // Eliminatory
-  q5: string[];
-  q1: string[];
-  q2: string[];
-  q3: string[];
-  q4: string[];
-  'q4.1': string[];
-  'q4.2': string[];
-  q9: string[];
-  q11: string[];
-  q_priorities: string[];
+  nivel_despreocupacion: string[]; // Eliminatory
+  perfil_foodie: string[];
+  atmosfera_isla: string[];
+  experiencia_snorkel: string[];
+  avistamiento_fauna: string[];
+  'logistica_fauna': string[];
+  'tipo_animal': string[];
+  diseno_habitacion: string[];
+  tipo_traslado: string[];
 }
 
 export interface StepConfig {

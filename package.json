@@ -5,16 +5,19 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node sync-resorts.mjs && vite build",
     "preview": "vite preview",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "sync": "node sync-resorts.mjs"
   },
   "dependencies": {
+    "framer-motion": "^12.38.0",
     "libphonenumber-js": "^1.12.40",
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-markdown": "^10.1.0"
+    "react-markdown": "^10.1.0",
+    "react-phone-number-input": "^3.4.16"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

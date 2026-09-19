@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Disparador de pruebas — Resort Finder webhooks</title>
+<style>
+  body { font-family: system-ui, sans-serif; max-width: 620px; margin: 40px auto; padding: 0 20px; color: #1a2b3c; }
+  h1 { font-size: 1.4rem; }
+  label { display: block; font-weight: 600; margin: 20px 0 6px; }
+  input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; }
+  button { display: block; width: 100%; margin-top: 14px; padding: 14px; border: none; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; }
+  .b1 { background: #00d1a0; color: white; }
+  .b2 { background: #0ea5e9; color: white; }
+  .b3 { background: #f1f5f9; color: #334155; }
+  #log { margin-top: 20px; padding: 14px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; font-size: 13px; white-space: pre-wrap; min-height: 40px; }
+  .nota { font-size: 13px; color: #64748b; line-height: 1.5; }
+</style>
+</head>
+<body>
+<h1>🧪 Disparador de pruebas — webhooks del Resort Finder</h1>
+<p class="nota">1. En Make, pon el módulo Webhook en <strong>"Redetermine data structure"</strong> (escuchando).<br>
+2. Pega aquí la URL de tu webhook.<br>
+3. Pulsa el botón del disparo que quieras enviar.<br>
+Los datos son falsos (emails @kakunitravels.com con "test") — borra los registros de Airtable al acabar.</p>
+
+<label>URL del webhook de Make</label>
+<input id="hook" placeholder="https://hook.eu1.make.com/xxxxxxxxxxxx">
+
+<button class="b1" onclick="send(leadPareja(), 'Lead final CON ref_session (rama pareja)')">1️⃣ Enviar lead falso con ref_session (Ruta A + pareja)</button>
+<button class="b2" onclick="send(ctaClick('itinerario'), 'Clic itinerario')">2️⃣ Enviar clic falso de itinerario (Ruta B)</button>
+<button class="b2" onclick="send(ctaClick('whatsapp'), 'Clic whatsapp')">3️⃣ Enviar clic falso de WhatsApp (Ruta B)</button>
+<button class="b2" onclick="send(ctaClick('web'), 'Clic web')">4️⃣ Enviar clic falso de web (Ruta B)</button>
+<button class="b3" onclick="send(leadSimple(), 'Lead final SIN ref_session')">5️⃣ Enviar lead falso normal, sin pareja (Ruta A)</button>
+
+<div id="log">Esperando…</div>
+
+<script>
+function leadPareja() {
+  return {
+    session_id: 'TEST-LUIS-002',
+    timestamp: new Date().toISOString(),
+    device_type: 'mobile',
+    ref: 'pareja',
+    ref_session: 'TEST-ANA-001',
+    answers: { atmosfera_isla: 'Íntima y tranquila' },
+    contact: { name: 'Luis Test', email: 'luis.test@kakunitravels.com', phone: '+34600000001', trip_motive: 'LUNA DE MIEL', trip_status: 'HOT', trip_month: 'OCTUBRE', trip_year: '2026', privacyAccepted: true },
+    recommended_resorts: [{ name: 'OBLU Select Lobigili', match_percentage: 92 }],
+    all_resorts_50: [{ name: 'OBLU Select Lobigili', match_percentage: 92 }],
+    all_resorts_50_text: 'OBLU Select Lobigili — 92%',
+    is_final: true
+  };
+}
+function leadSimple() {
+  const d = leadPareja();
+  d.session_id = 'TEST-ANA-001';
+  d.ref = ''; d.ref_session = '';
+  d.contact = { ...d.contact, name: 'Ana Test', email: 'ana.test@kakunitravels.com', phone: '' };
+  return d;
+}
+function ctaClick(tipo) {
+  return {
+    session_id: 'TEST-LUIS-002',
+    timestamp: new Date().toISOString(),
+    event: 'cta_click',
+    cta: tipo,
+    email: 'luis.test@kakunitravels.com',
+    name: 'Luis Test',
+    is_final: false
+  };
+}
+async function send(payload, label) {
+  const url = document.getElementById('hook').value.trim();
+  const log = document.getElementById('log');
+  if (!url.startsWith('http')) { log.textContent = '⚠️ Pega primero la URL del webhook de Make.'; return; }
+  log.textContent = 'Enviando: ' + label + '…';
+  try {
+    const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    log.textContent = (r.ok ? '✅ Enviado: ' : '⚠️ Respuesta ' + r.status + ': ') + label + '\n\n' + JSON.stringify(payload, null, 2);
+  } catch (e) {
+    log.textContent = '❌ Error de red: ' + e.message;
+  }
+}
+</script>
+</body>
+</html>
