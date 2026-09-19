@@ -53,27 +53,23 @@ export const STEPS: StepConfig[] = [
       },
       {
         id: 'perfil_foodie',
-        title: "Perfil Foodie",
+        title: "¿Buffet o dine around?",
+        text: "No va de comer mejor o peor. Va de formato: cómo coméis, no cómo de bien.",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "Tras inspeccionar decenas de resorts, hemos comprobado que la gastronomía es el factor #1 que dispara el precio.\n\nDada nuestra rica cultura gastronómica, la comida suele ser un punto crítico. En ninguno de los resorts que hemos seleccionado comeréis mal, pero la experiencia culinaria es subjetiva.\n\n---\n\n### 🍽️ Gourmet a la Carta\nBuffet para desayunar y el resto de comidas a la carta o menú degustación en restaurantes de especialidad.\n\n✅ **A favor:** Alta cocina y platos preparados al momento con ingredientes premium.\n\n❌ **En contra:** El presupuesto necesario es más elevado.\n\n---\n\n### 🍛 Nos gusta comer bien\nLa mayoría de las comidas son tipo buffet, combinadas con una o dos cenas a la carta en restaurantes de especialidad de muy buen nivel.\n\n✅ **A favor:** Excelente equilibrio entre la variedad del buffet y cenas especiales de alta calidad.\n\n❌ **En contra:** La mayor parte de las comidas del viaje serán en formato buffet.\n\n---\n\n### 🥪 Básico\nCon el restaurante principal tipo buffet tenemos más que suficiente para disfrutar.\n\n✅ **A favor:** Es la opción más económica y ofrece mucha variedad diaria.\n\n❌ **En contra:** Se come siempre en el mismo restaurante y la calidad es más estándar.\n\n---\n\n> **Nota:** En los restaurantes tipo buffet, la temática de la comida cambia cada día para garantizar variedad."
+          text: "Lo que de verdad dispara el precio de la comida en Maldivas es la calidad de la cocina del resort. Eso lo decide vuestro presupuesto, no esta pregunta.\n\nAquí elegís el **formato**: cómo coméis, no cómo de bien. Y que quede claro: buffet no significa comer mal. Hay buffets espectaculares, con producto de primera y estaciones en vivo.\n\n---\n\n### 🍽️ Dine Around\nTodas las cenas en los restaurantes de especialidad.\n\n✅ **A favor:** intimidad, cero bullicio y cenar en un sitio distinto cada noche. Como elegís de carta, las alergias y dietas se resuelven mucho mejor.\n\n❌ **En contra:** no es barra libre de carta. Elegís un entrante, un principal y un postre, y hay bastantes menos opciones que en un buffet. Es la opción más cara.\n\n---\n\n### 🍛 Buffet, más alguna cena especial\nEl buffet como base, que cambia de temática cada día —asiático, mediterráneo, maldivo— y, según el resort, una o dos cenas de especialidad.\n\n✅ **A favor:** coméis lo que queráis y probáis de todo. Si tenéis gustos distintos o mucho apetito, eso no os lo da ningún restaurante a la carta.\n\n❌ **En contra:** es el comedor principal: más concurrido y menos íntimo, y en luna de miel eso se nota.\n\n---\n\n> **Lo que casi nadie mira:** el dine around no tiene por qué incluir todos los restaurantes del resort. Puede cubrir tres de cinco, y los dos mejores quedarse fuera. La pregunta no es «tiene dine around», sino «qué restaurantes entran» — y eso os lo miramos nosotros antes de recomendaros nada."
         },
         dependsOn: { questionId: 'nivel_despreocupacion', optionId: 'B' },
         options: [
-          { 
-            id: 'A', 
-            label: "🍽️ Gourmet a la Carta", 
-            description: "Para quienes buscan experiencias gastronómicas de alto nivel con servicio a la carta y platos elaborados." 
+          {
+            id: 'A',
+            label: "🍽️ Dine Around",
+            description: "Todas las cenas a la carta en los restaurantes de especialidad. Menos variedad, pero plato recién hecho, cero bullicio y un sitio distinto cada noche."
           },
-          { 
-            id: 'B', 
-            label: "🍛 Nos gusta comer bien", 
-            description: "Un equilibrio perfecto: variedad diaria en buffet y momentos especiales en restaurantes de especialidad." 
-          },
-          { 
-            id: 'C', 
-            label: "🥪 Básico", 
-            description: "Priorizamos otros aspectos del viaje. Con un buffet variado y de calidad nos sentimos cómodos." 
+          {
+            id: 'B',
+            label: "🍛 Buffet, más alguna cena especial",
+            description: "El buffet como base, que cambia de temática a diario, y según el resort una o dos cenas de especialidad. Más variedad y cantidad."
           },
         ]
       }
@@ -241,7 +237,7 @@ export const STEPS: StepConfig[] = [
         isMultiSelect: true,
         options: [
           { id: 'nivel_despreocupacion', label: "Nivel de Despreocupación (Todo Incluido)" },
-          { id: 'perfil_foodie', label: "Perfil Foodie (Gastronomía)" },
+          { id: 'perfil_foodie', label: "Buffet o dine around" },
           { id: 'atmosfera_isla', label: "Atmósfera y tamaño de la isla" },
           { id: 'experiencia_snorkel', label: "Experiencia de Snorkel" },
           { id: 'avistamiento_fauna', label: "Avistamiento de Fauna grande" },
