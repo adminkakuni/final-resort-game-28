@@ -23,6 +23,7 @@ const F = {
   name:      'fldURcMiFq7jCGoe9', // Name
   choosen:   'fldRjm9qD1o8hJ2ky', // choosen2025/2026
   fotoQwilr: 'fldnsRKXy9BU4pjr9', // foto portada (respaldo)
+  rfNombre:  'fldw580VAi7JR9k96', // RF NOMBRE: solo para excepciones
   rfFoto:    'fldWAFiJVHSwkHaDg',
 };
 
@@ -107,7 +108,10 @@ for (const r of choosen) {
 
   resorts.push({
     id: r.id,
-    name: nombreFicha,
+    // Por defecto manda Name (es el campo que se mantiene al dia).
+    // RF NOMBRE solo se usa si esta relleno, para los casos en que el
+    // nombre interno no sirve para ensenarselo a un cliente.
+    name: (r.fields[F.rfNombre] || '').trim() || nombreFicha,
     imageUrl: foto,
     ...criterios,
   });
