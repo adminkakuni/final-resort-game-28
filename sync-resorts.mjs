@@ -23,7 +23,6 @@ const F = {
   name:      'fldURcMiFq7jCGoe9', // Name
   choosen:   'fldRjm9qD1o8hJ2ky', // choosen2025/2026
   fotoQwilr: 'fldnsRKXy9BU4pjr9', // foto portada (respaldo)
-  rfNombre:  'fldw580VAi7JR9k96',
   rfFoto:    'fldWAFiJVHSwkHaDg',
 };
 
@@ -87,7 +86,8 @@ const resorts = [];
 const incompletos = [];
 
 for (const r of choosen) {
-  const nombreFicha = r.fields[F.name] || r.id;
+  const nombreFicha = (r.fields[F.name] || '').trim();
+  if (!nombreFicha) { incompletos.push({ nombre: r.id, faltan: ['Name'] }); continue; }
   const faltan = [];
 
   const criterios = {};
@@ -107,7 +107,7 @@ for (const r of choosen) {
 
   resorts.push({
     id: r.id,
-    name: r.fields[F.rfNombre] || nombreFicha,
+    name: nombreFicha,
     imageUrl: foto,
     ...criterios,
   });
