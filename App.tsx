@@ -100,7 +100,7 @@ const getOptionLabel = (qId: string, optId: string | string[]) => {
 const initialState: QuizState = {
   stepIndex: 0,
   answers: {},
-  contact: { name: '', email: '', phone: '', comments: '', trip_motive: '', trip_status: '', trip_month: '', trip_year: '2026', privacyAccepted: false },
+  contact: { name: '', email: '', phone: '', comments: '', trip_motive: '', trip_status: '', trip_month: '', trip_year: '2026', how_found: '', privacyAccepted: false },
   isSubmitting: false,
   results: null,
   error: null,
@@ -269,7 +269,7 @@ export default function App() {
 
     // Validation for Contact Step
     if (currentStepConfig.type === StepType.CONTACT) {
-      if (!state.contact.name || !state.contact.email || !state.contact.trip_motive || !state.contact.trip_status || !state.contact.trip_month || !state.contact.privacyAccepted) {
+      if (!state.contact.name || !state.contact.email || !state.contact.trip_motive || !state.contact.trip_status || !state.contact.trip_month || !state.contact.how_found || !state.contact.privacyAccepted) {
         setValidationError("Por favor, completa todos los campos obligatorios y acepta la política de privacidad.");
         return;
       }
@@ -358,6 +358,7 @@ export default function App() {
           trip_status: state.contact.trip_status,
           trip_month: state.contact.trip_month,
           trip_year: state.contact.trip_year || '2026',
+          how_found: state.contact.how_found,
           privacyAccepted: state.contact.privacyAccepted
         },
         recommended_resorts: recommendedResorts,
@@ -1331,6 +1332,24 @@ export default function App() {
                                 </select>
                             </div>
                         </div>
+                    </div>
+
+                    {/* 3b. CÓMO NOS HAN CONOCIDO */}
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">¿Cómo nos habéis conocido? *</label>
+                        <select
+                            className="w-full p-4 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none transition appearance-none cursor-pointer"
+                            value={state.contact.how_found || ''}
+                            onChange={(e) => handleContactChange('how_found', e.target.value)}
+                        >
+                            <option value="">Selecciona una opción</option>
+                            <option value="RECOMENDACION">Nos lo recomendó alguien</option>
+                            <option value="INSTAGRAM">Instagram</option>
+                            <option value="YOUTUBE">YouTube</option>
+                            <option value="IA">ChatGPT u otra IA</option>
+                            <option value="GOOGLE">Google</option>
+                            <option value="ANUNCIO">Un anuncio</option>
+                        </select>
                     </div>
 
                     {/* 4. NOMBRES */}

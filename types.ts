@@ -44,6 +44,7 @@ export interface ContactInfo {
   trip_status?: string;
   trip_month?: string;
   trip_year?: string;
+  how_found?: string;
   privacyAccepted: boolean;
 }
 

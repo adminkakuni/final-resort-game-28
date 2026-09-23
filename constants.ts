@@ -57,19 +57,19 @@ export const STEPS: StepConfig[] = [
         text: "No va de comer mejor o peor. Va de formato: cómo coméis, no cómo de bien.",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "Lo que de verdad dispara el precio de la comida en Maldivas es la calidad de la cocina del resort. Eso lo decide vuestro presupuesto, no esta pregunta.\n\nAquí elegís el **formato**: cómo coméis, no cómo de bien. Y que quede claro: buffet no significa comer mal. Hay buffets espectaculares, con producto de primera y estaciones en vivo.\n\n---\n\n### 🍽️ Dine Around\nTodas las cenas en los restaurantes de especialidad.\n\n✅ **A favor:** intimidad, cero bullicio y cenar en un sitio distinto cada noche. Como elegís de carta, las alergias y dietas se resuelven mucho mejor.\n\n❌ **En contra:** no es barra libre de carta. Elegís un entrante, un principal y un postre, y hay bastantes menos opciones que en un buffet. Es la opción más cara.\n\n---\n\n### 🍛 Buffet, más alguna cena especial\nEl buffet como base, que cambia de temática cada día —asiático, mediterráneo, maldivo— y, según el resort, una o dos cenas de especialidad.\n\n✅ **A favor:** coméis lo que queráis y probáis de todo. Si tenéis gustos distintos o mucho apetito, eso no os lo da ningún restaurante a la carta.\n\n❌ **En contra:** es el comedor principal: más concurrido y menos íntimo, y en luna de miel eso se nota.\n\n---\n\n> **Lo que casi nadie mira:** el dine around no tiene por qué incluir todos los restaurantes del resort. Puede cubrir tres de cinco, y los dos mejores quedarse fuera. La pregunta no es «tiene dine around», sino «qué restaurantes entran» — y eso os lo miramos nosotros antes de recomendaros nada."
+          text: "💶 **Sobre el precio, dos cosas:**\n\n1. Lo que más dispara el precio de la comida en Maldivas es la **calidad de la cocina del resort**. Eso lo marca el nivel del resort (y vuestro presupuesto), no esta pregunta.\n2. Dentro de un **mismo resort**, el **dine around es más caro** que el buffet con alguna cena especial. Si vais ajustados, el buffet os deja margen para una villa mejor o más noches.\n\nAquí elegís el **formato**: cómo coméis, no cómo de bien. Y que quede claro: buffet no significa comer mal. Hay buffets espectaculares, con producto de primera y estaciones en vivo.\n\n---\n\n### 🍽️ Dine Around\nTodas las cenas en los restaurantes de especialidad.\n\n✅ **A favor:** intimidad, cero bullicio y cenar en un sitio distinto cada noche. Como elegís de carta, las alergias y dietas se resuelven mucho mejor.\n\n❌ **En contra:** no es barra libre de carta. Elegís un entrante, un principal y un postre, y hay bastantes menos opciones que en un buffet. Es la opción más cara.\n\n---\n\n### 🍛 Buffet, más alguna cena especial\nEl buffet como base, que cambia de temática cada día —asiático, mediterráneo, maldivo— y, según el resort, una o dos cenas de especialidad.\n\n✅ **A favor:** coméis lo que queráis y probáis de todo. Si tenéis gustos distintos o mucho apetito, eso no os lo da ningún restaurante a la carta.\n\n❌ **En contra:** es el comedor principal: más concurrido y menos íntimo, y en luna de miel eso se nota.\n\n---\n\n> **Lo que casi nadie mira:** el dine around no tiene por qué incluir todos los restaurantes del resort. Puede cubrir tres de cinco, y los dos mejores quedarse fuera. La pregunta no es «tiene dine around», sino «qué restaurantes entran» — y eso os lo miramos nosotros antes de recomendaros nada."
         },
         dependsOn: { questionId: 'nivel_despreocupacion', optionId: 'B' },
         options: [
           {
             id: 'A',
             label: "🍽️ Dine Around",
-            description: "Todas las cenas a la carta en los restaurantes de especialidad. Menos variedad, pero plato recién hecho, cero bullicio y un sitio distinto cada noche."
+            description: "Todas las cenas a la carta en los restaurantes de especialidad. Plato recién hecho, cero bullicio y un sitio distinto cada noche. La opción más cara."
           },
           {
             id: 'B',
             label: "🍛 Buffet, más alguna cena especial",
-            description: "El buffet como base, que cambia de temática a diario, y según el resort una o dos cenas de especialidad. Más variedad y cantidad."
+            description: "El buffet como base, que cambia de temática a diario, y según el resort una o dos cenas de especialidad. Más variedad y cantidad, y más económico."
           },
         ]
       }
