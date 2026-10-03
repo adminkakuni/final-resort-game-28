@@ -335,6 +335,25 @@ export default function App() {
         return acc;
       }, {} as Record<string, string>);
 
+      // Filtros: cada uno con la respuesta que se ha hecho innegociable
+      // (ej. "Régimen de comidas: Media Pensión / Pensión Completa"), igual que se ve en la app.
+      const rawFilters = currentAnswers['filtros_eliminatorios'];
+      const filterIds = Array.isArray(rawFilters) ? rawFilters : rawFilters ? [rawFilters as string] : [];
+      if (filterIds.length) {
+        mappedAnswers['filtros_eliminatorios'] = filterIds.map(fId => {
+          const filterLabel = getOptionLabel('filtros_eliminatorios', fId);
+          const ans = fId === 'avistamiento_fauna' && currentAnswers['tipo_animal']
+            ? currentAnswers['tipo_animal']
+            : currentAnswers[fId];
+          const ansQ = fId === 'avistamiento_fauna' && currentAnswers['tipo_animal'] ? 'tipo_animal' : fId;
+          return ans ? `${filterLabel}: ${getOptionLabel(ansQ, ans as string | string[])}` : filterLabel;
+        }).join(' · ');
+      }
+
+      // Régimen de comidas como código (mismo que va en el enlace al itinerario)
+      const boardCodes: Record<string, string> = { A: 'ti_actividades', B: 'ti', C: 'pc' };
+      const resortBoardCode = boardCodes[currentAnswers['nivel_despreocupacion'] as string] || '';
+
       const tracking = utmRef.current;
       const payload = {
         session_id: sessionIdRef.current,
@@ -349,6 +368,7 @@ export default function App() {
         fbc:    tracking['fbc']    || '',
         fbp:    tracking['fbp']    || '',
         answers: mappedAnswers,
+        resort_board: resortBoardCode,
         contact: {
           name: state.contact.name.trim(),
           email: emailClean,

@@ -236,7 +236,7 @@ export const STEPS: StepConfig[] = [
         warningBox: "⚠️ Seleccionad los puntos que consideréis **no negociables**. El sistema descartará cualquier resort que no cumpla exactamente con lo que hayáis respondido anteriormente.",
         isMultiSelect: true,
         options: [
-          { id: 'nivel_despreocupacion', label: "Nivel de Despreocupación (Todo Incluido)" },
+          { id: 'nivel_despreocupacion', label: "Régimen de comidas" },
           { id: 'perfil_foodie', label: "Buffet o dine around" },
           { id: 'atmosfera_isla', label: "Atmósfera y tamaño de la isla" },
           { id: 'experiencia_snorkel', label: "Experiencia de Snorkel" },
