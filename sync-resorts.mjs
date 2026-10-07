@@ -25,6 +25,7 @@ const F = {
   fotoQwilr: 'fldnsRKXy9BU4pjr9', // foto portada (respaldo)
   rfNombre:  'fldw580VAi7JR9k96', // RF NOMBRE: solo para excepciones
   rfFoto:    'fldWAFiJVHSwkHaDg',
+  franja:    'fldpcFolK9CfJzPJj', // FRANJA PRECIO (€ … €€€€)
 };
 
 // Campo de Airtable -> clave en resorts.ts. Los 8 primeros son obligatorios.
@@ -70,6 +71,12 @@ const letras = (valor) =>
     .filter((c) => /[A-D]/.test(c))
     .sort();
 
+// "€€€" (o {name:"€€€"}) -> 3. Sin dato -> 0 (en los empates va detrás).
+const franjaNum = (v) => {
+  const t = String(v && typeof v === 'object' ? v.name ?? '' : v ?? '');
+  return (t.match(/€/g) || []).length;
+};
+
 const esc = (s) => String(s).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
 
 let registros;
@@ -113,6 +120,7 @@ for (const r of choosen) {
     // nombre interno no sirve para ensenarselo a un cliente.
     name: (r.fields[F.rfNombre] || '').trim() || nombreFicha,
     imageUrl: foto,
+    franja: franjaNum(r.fields[F.franja]),
     ...criterios,
   });
 }
@@ -132,6 +140,7 @@ const cuerpo = resorts.map((r) => `  {
     id: '${r.id}',
     name: "${esc(r.name)}",
     imageUrl: "${esc(r.imageUrl)}",
+    franja: ${r.franja},
     nivel_despreocupacion: ${JSON.stringify(r.nivel_despreocupacion)},
     perfil_foodie: ${JSON.stringify(r.perfil_foodie)},
     atmosfera_isla: ${JSON.stringify(r.atmosfera_isla)},

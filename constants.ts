@@ -28,7 +28,7 @@ export const STEPS: StepConfig[] = [
         title: "¿Qué nivel de despreocupación buscáis en el resort en cuanto a comidas, bebidas y actividades?",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "### ✨ Todo incluido con actividades\nIdeal si os gusta comer, beber y hacer actividades sin mirar el precio.\n\n✅ **A favor:** 0 preocupaciones, gran valor por euro invertido.\n\n❌ **En contra:** Requiere min. 4 noches y limita el número de resorts.\n\n---\n\n### ✨ Todo Incluido (Comidas y Bebidas)\nPara quienes quieren tener las comidas cubiertas pero elegir sus propias actividades.\n\n✅ **A favor:** Min. 3 noches, disponible en la mayoría de resorts.\n\n❌ **En contra:** Factura extra al final por actividades/excursiones.\n\n---\n\n### ✨ Media Pensión / Pensión Completa\nPara quienes buscan una experiencia gastronómica y de alojamiento superior.\n\n✅ **A favor:** Servicio, comidas y habitaciones muy premium.\n\n❌ **En contra:** Pocos resorts de este nivel."
+          text: "### ✨ Todo incluido con actividades\nIdeal si os gusta comer, beber y hacer actividades sin mirar el precio.\n\n✅ **A favor:** 0 preocupaciones, gran valor por euro invertido.\n\n❌ **En contra:** Requiere mínimo 4 noches de resort y no todos los resorts lo ofrecen.\n\n---\n\n### ✨ Todo Incluido (Comidas y Bebidas)\nPara quienes quieren tener las comidas cubiertas pero elegir sus propias actividades.\n\n✅ **A favor:** Min. 3 noches, disponible en la mayoría de resorts.\n\n❌ **En contra:** Factura extra al final por actividades/excursiones.\n\n---\n\n### ✨ Media Pensión / Pensión Completa\nPara parejas que beben poco alcohol.\n\n✅ **A favor:** Pagáis solo lo que tomáis: ese ahorro os permite subir de nivel de resort o gastar menos en el viaje.\n\n❌ **En contra:** Las bebidas y los extras se pagan aparte, así que si bebéis a menudo la cuenta final sube."
         },
         options: [
           {
@@ -47,7 +47,7 @@ export const STEPS: StepConfig[] = [
             id: 'C',
             label: "Media Pensión / Pensión Completa",
             chip: "min 2 noches",
-            description: "Ideal para quienes priorizan la calidad de la habitación y la gastronomía gourmet por encima de la cantidad."
+            description: "Ideal si bebéis poco alcohol: pagáis solo lo que tomáis, y con eso podéis subir de nivel de resort o ahorrar."
           },
         ]
       },
@@ -82,27 +82,16 @@ export const STEPS: StepConfig[] = [
     questions: [
       {
         id: 'atmosfera_isla',
-        title: "¿Cómo imagináis la atmósfera y el espacio de la isla en vuestro día a día?",
+        title: "¿Cómo os imagináis el día a día en la isla?",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "En Maldivas, el tamaño de la isla define vuestra experiencia de viaje.\n\n---\n\n### 🏝️ Islas pequeñas\nSe recorren fácilmente a pie en menos de 10-15 minutos.\n\n✅ **A favor:** Intimidad total, sensación de 'náufrago' y libertad de no depender de transporte.\n\n❌ **En contra:** Menos variedad de restaurantes e instalaciones. A veces pueden resultar algo claustrofóbicas.\n\n---\n\n### 🚲 Islas grandes\nEs habitual moverse en bicicleta o buggy para llegar a los distintos puntos de la isla.\n\n✅ **A favor:** Mucha selva para explorar, gran variedad de restaurantes, bares y actividades.\n\n❌ **En contra:** Menos sensación de aislamiento. No todos los resorts ofrecen bicis (dependerás de llamar a un buggy).\n\n---\n\n### ✨ El Vibe de la isla\nAparte del tamaño, el ambiente social es clave:\n\n*   **Explorador Solitario:** Islas grandes pero con muy pocos huéspedes. Buscamos privacidad y calma absoluta.\n*   **Paraíso Vibrante:** Resorts dinámicos con música en la piscina, bares animados y mucha vida social."
+          text: "En Maldivas, el tamaño de la isla define vuestra experiencia de viaje.\n\n---\n\n### 🏝️ Islas pequeñas\nSe recorren fácilmente a pie en menos de 10-15 minutos.\n\n✅ **A favor:** Intimidad total, sensación de 'náufrago' y libertad de no depender de transporte.\n\n❌ **En contra:** Menos variedad de restaurantes e instalaciones. A veces pueden resultar algo claustrofóbicas.\n\n---\n\n### 🚲 Islas grandes\nEs habitual moverse en bicicleta o buggy para llegar a los distintos puntos de la isla.\n\n✅ **A favor:** Mucha selva para explorar, gran variedad de restaurantes, bares y actividades.\n\n❌ **En contra:** Menos sensación de aislamiento. No todos los resorts ofrecen bicis (dependerás de llamar a un buggy).\n\n---\n\n### ✨ El ambiente\nAparte del tamaño, cuenta mucho el ambiente:\n\n*   **Tranquila pero con opciones:** isla grande, varios restaurantes y espacio de sobra, pero sin animación.\n*   **Con ambiente:** música al atardecer, bares animados y más vida. Suele haber más familias con niños.\n\n---\n\n### 📅 Ojo con la temporada\nEn temporada alta (Navidad, Semana Santa, verano europeo) todos los resorts están más llenos y animados; en temporada baja, más tranquilos."
         },
         options: [
-          { 
-            id: 'A', 
-            label: "La Isla Romántica", 
-            description: "Isla pequeña e íntima para recorrer a pie. Paz absoluta y sensación de 'náufrago'." 
-          },
-          { 
-            id: 'B', 
-            label: "El Explorador Solitario", 
-            description: "Isla grande con mucha selva y espacios amplios. Privacidad y aislamiento total." 
-          },
-          { 
-            id: 'C', 
-            label: "El Paraíso Vibrante", 
-            description: "Isla grande con mucha vida, gran variedad de restaurantes y ambiente animado." 
-          }
+          { id: 'A', label: "Íntima y tranquila", description: "Isla pequeña que se recorre a pie. Pocas villas, paz y sensación de 'náufrago'." },
+          { id: 'B', label: "Tranquila pero con opciones", description: "Isla más grande, con varios restaurantes y espacio de sobra, sin animación." },
+          { id: 'C', label: "Con ambiente", description: "Isla grande con bares, música al atardecer y más vida. Suele haber más familias con niños." },
+          { id: 'D', label: "Nos da igual", isHighlighted: true }
         ]
       }
     ]
@@ -114,11 +103,12 @@ export const STEPS: StepConfig[] = [
     questions: [
       {
         id: 'avistamiento_fauna',
-        title: "🦈 ¿Os gustaría ver animales marinos grandes durante el viaje?",
-        text: "Mantas · Tiburón ballena · Tiburón nodriza",
+        title: "🦈 ¿Ver animales marinos grandes es tan importante como para elegir el resort por eso?",
+        text: "Mantas, tiburón ballena o tiburón nodriza no se ven desde la playa: son excursiones en barco, con coste aparte, a zonas concretas de Maldivas.",
         options: [
-          { id: 'A', label: "🙅‍♂️ No especialmente", description: "Con la experiencia del resort (playa/arrecife/ambiente) nos basta." },
-          { id: 'B', label: "🦈 Sí, es prioridad", description: "Queremos ver mantas, tiburón ballena y tiburones nodriza." },
+          { id: 'A', label: "🙅‍♂️ No especialmente", description: "Con la experiencia del resort (playa, arrecife, ambiente) nos basta." },
+          { id: 'C', label: "🐢 Nos gustaría, pero no a costa de elegir el resort por eso", description: "Si se puede, haremos alguna excursión, pero no es lo que decide el resort." },
+          { id: 'B', label: "🦈 Sí, es lo que más ilusión nos hace", description: "Queremos ver mantas, tiburón ballena o tiburones nodriza, aunque eso limite los resorts." },
         ]
       },
       {
@@ -233,10 +223,9 @@ export const STEPS: StepConfig[] = [
       {
         id: 'filtros_eliminatorios',
         title: "¿Qué es imprescindible para vosotros?",
-        warningBox: "⚠️ Seleccionad los puntos que consideréis **no negociables**. El sistema descartará cualquier resort que no cumpla exactamente con lo que hayáis respondido anteriormente.",
+        warningBox: "⚠️ Seleccionad los puntos que consideréis **no negociables**. El sistema descartará cualquier resort que no cumpla exactamente con lo que hayáis respondido anteriormente.\n\nEl **régimen de comidas** no hace falta marcarlo: siempre se respeta.",
         isMultiSelect: true,
         options: [
-          { id: 'nivel_despreocupacion', label: "Régimen de comidas" },
           { id: 'perfil_foodie', label: "Buffet o dine around" },
           { id: 'atmosfera_isla', label: "Atmósfera y tamaño de la isla" },
           { id: 'experiencia_snorkel', label: "Experiencia de Snorkel" },

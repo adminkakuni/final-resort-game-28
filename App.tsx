@@ -100,7 +100,7 @@ const getOptionLabel = (qId: string, optId: string | string[]) => {
 const initialState: QuizState = {
   stepIndex: 0,
   answers: {},
-  contact: { name: '', email: '', phone: '', comments: '', trip_motive: '', trip_status: '', trip_month: '', trip_year: '2026', how_found: '', privacyAccepted: false },
+  contact: { name: '', email: '', phone: '', comments: '', trip_motive: '', trip_status: '', trip_month: '', trip_year: '', how_found: '', privacyAccepted: false },
   isSubmitting: false,
   results: null,
   error: null,
@@ -269,7 +269,7 @@ export default function App() {
 
     // Validation for Contact Step
     if (currentStepConfig.type === StepType.CONTACT) {
-      if (!state.contact.name || !state.contact.email || !state.contact.trip_motive || !state.contact.trip_status || !state.contact.trip_month || !state.contact.how_found || !state.contact.privacyAccepted) {
+      if (!state.contact.name || !state.contact.email || !state.contact.trip_motive || !state.contact.trip_status || !state.contact.trip_month || !state.contact.trip_year || !state.contact.how_found || !state.contact.privacyAccepted) {
         setValidationError("Por favor, completa todos los campos obligatorios y acepta la política de privacidad.");
         return;
       }
@@ -377,7 +377,7 @@ export default function App() {
           trip_motive: state.contact.trip_motive,
           trip_status: state.contact.trip_status,
           trip_month: state.contact.trip_month,
-          trip_year: state.contact.trip_year || '2026',
+          trip_year: state.contact.trip_year,
           how_found: state.contact.how_found,
           privacyAccepted: state.contact.privacyAccepted
         },
@@ -563,11 +563,13 @@ export default function App() {
                     if (opt.id === 'perfil_foodie' && !ans) return false;
                     // Rule 2: Fauna grande (avistamiento_fauna) - Hide if "No especialmente" (A) OR if they chose to see it from a local island (logistica_fauna === 'A')
                     if (opt.id === 'avistamiento_fauna') {
-                      if (ans === 'A') return false;
+                      if (ans === 'A' || ans === 'C') return false;
                       if (state.answers['logistica_fauna'] === 'A') return false;
                     }
                     // Rule 3: Diseño (diseno_habitacion) - Hide if "Nos gustan ambos estilos" (C)
                     if (opt.id === 'diseno_habitacion' && ans === 'C') return false;
+                    // Ambiente: "Nos da igual" (D) no puede ser imprescindible
+                    if (opt.id === 'atmosfera_isla' && ans === 'D') return false;
                     // Rule 4: Traslado (tipo_traslado) - Hide if "Nos da igual" (D)
                     if (opt.id === 'tipo_traslado' && ans === 'D') return false;
                     // General rule: If a question wasn't answered (e.g. hidden), don't show it as a priority option
@@ -1346,6 +1348,7 @@ export default function App() {
                                     value={state.contact.trip_year}
                                     onChange={(e) => handleContactChange('trip_year', e.target.value)}
                                 >
+                                    <option value="">Año</option>
                                     <option value="2026">2026</option>
                                     <option value="2027">2027</option>
                                     <option value="2028">2028</option>
