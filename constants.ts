@@ -28,7 +28,7 @@ export const STEPS: StepConfig[] = [
         title: "¿Qué nivel de despreocupación buscáis en el resort en cuanto a comidas, bebidas y actividades?",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "### ✨ Todo incluido con actividades\nIdeal si os gusta comer, beber y hacer actividades sin mirar el precio.\n\n✅ **A favor:** 0 preocupaciones, gran valor por euro invertido.\n\n❌ **En contra:** Requiere mínimo 4 noches de resort y no todos los resorts lo ofrecen.\n\n---\n\n### ✨ Todo Incluido (Comidas y Bebidas)\nPara quienes quieren tener las comidas cubiertas pero elegir sus propias actividades.\n\n✅ **A favor:** Min. 3 noches, disponible en la mayoría de resorts.\n\n❌ **En contra:** Factura extra al final por actividades/excursiones.\n\n---\n\n### ✨ Media Pensión / Pensión Completa\nPara parejas que beben poco alcohol.\n\n✅ **A favor:** Pagáis solo lo que tomáis: ese ahorro os permite subir de nivel de resort o gastar menos en el viaje.\n\n❌ **En contra:** Las bebidas y los extras se pagan aparte, así que si bebéis a menudo la cuenta final sube."
+          text: "### ✨ Todo incluido con actividades\nIdeal si os gusta comer, beber y hacer actividades sin mirar el precio.\n\n✅ **A favor:** 0 preocupaciones, gran valor por euro invertido.\n\n❌ **En contra:** Requiere mínimo 4 noches de resort y no todos los resorts lo ofrecen.\n\n---\n\n### ✨ Todo Incluido (Comidas y Bebidas)\nPara quienes quieren tener las comidas cubiertas pero elegir sus propias actividades.\n\n✅ **A favor:** disponible en la mayoría de resorts y desde 3 noches (algunos piden 4).\n\n❌ **En contra:** Factura extra al final por actividades/excursiones.\n\n---\n\n### ✨ Media Pensión / Pensión Completa\nPara parejas que beben poco alcohol.\n\n✅ **A favor:** Pagáis solo lo que tomáis: ese ahorro os permite subir de nivel de resort o gastar menos en el viaje.\n\n❌ **En contra:** Las bebidas y los extras se pagan aparte, así que si bebéis a menudo la cuenta final sube."
         },
         options: [
           {
@@ -130,7 +130,7 @@ export const STEPS: StepConfig[] = [
         dependsOn: { questionId: 'avistamiento_fauna', optionId: 'B' },
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "Delfines es una excursión que se puede hacer desde cualquier resort."
+          text: "Los delfines se ven en excursión desde casi cualquier resort, así que no hace falta elegir el resort por ellos."
         },
         options: [
           { id: 'A', label: "Mantas", imageUrl: "https://kakunitravels.com/wp-content/uploads/2026/04/manta-rasdhoo.webp" },
@@ -153,7 +153,7 @@ export const STEPS: StepConfig[] = [
           title: "INFO PARA DECIDIR MEJOR",
           text: "La mejor vida marina suele encontrarse en las paredes del arrecife, justo donde el agua empieza a hacerse profunda.\n\nEn el arrecife es habitual ver multitud de peces, tortugas, tiburones de arrecife (inofensivos) o mantas águila. Sin embargo, es muy difícil ver mantas, tiburones ballena o tiburones nodriza haciendo simplemente snorkel desde la playa.\n\n> ⚠️ **¡Atención!** No todos los resorts tienen un buen arrecife para hacer snorkel: a veces el coral está dañado, y otras veces la isla está rodeada por una inmensa laguna de arena blanca y agua turquesa (preciosa para bañarse, pero sin profundidad ni corales para ver peces)."
         },
-        warningBox: "ADVERTENCIA: que un resort tenga un buen arrecife, no significa que toda la isla tiene buen arrecife, significa que es de fácil acceso desde la orilla del resort.",
+        warningBox: "⚠️ Que un resort tenga buen house reef no significa que haya arrecife alrededor de toda la isla: significa que hay algún punto de la orilla desde el que se llega fácil.",
         options: [
           {
             id: 'A',
@@ -223,7 +223,7 @@ export const STEPS: StepConfig[] = [
       {
         id: 'filtros_eliminatorios',
         title: "¿Qué es imprescindible para vosotros?",
-        warningBox: "⚠️ Seleccionad los puntos que consideréis **no negociables**. El sistema descartará cualquier resort que no cumpla exactamente con lo que hayáis respondido anteriormente.\n\nEl **régimen de comidas** no hace falta marcarlo: siempre se respeta.",
+        warningBox: "⚠️ Seleccionad los puntos que consideréis **no negociables**. Buscaremos resorts que cumplan todos estos puntos. Si con todos ellos quedan muy pocas opciones, os enseñaremos las que más se acerquen.\n\nEl **régimen de comidas** no hace falta marcarlo: siempre se respeta.",
         isMultiSelect: true,
         options: [
           { id: 'perfil_foodie', label: "Buffet o dine around" },
