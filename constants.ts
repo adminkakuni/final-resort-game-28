@@ -82,15 +82,15 @@ export const STEPS: StepConfig[] = [
     questions: [
       {
         id: 'atmosfera_isla',
-        title: "¿Cómo os imagináis el día a día en la isla?",
+        title: "¿Qué tipo de isla os imagináis?",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "En Maldivas, el tamaño de la isla define vuestra experiencia de viaje.\n\n---\n\n### 🏝️ Islas pequeñas\nSe recorren fácilmente a pie en menos de 10-15 minutos.\n\n✅ **A favor:** Intimidad total, sensación de 'náufrago' y libertad de no depender de transporte.\n\n❌ **En contra:** Menos variedad de restaurantes e instalaciones. A veces pueden resultar algo claustrofóbicas.\n\n---\n\n### 🚲 Islas grandes\nEs habitual moverse en bicicleta o buggy para llegar a los distintos puntos de la isla.\n\n✅ **A favor:** Mucha selva para explorar, gran variedad de restaurantes, bares y actividades.\n\n❌ **En contra:** Menos sensación de aislamiento. No todos los resorts ofrecen bicis (dependerás de llamar a un buggy).\n\n---\n\n### ✨ El ambiente\nAparte del tamaño, cuenta mucho el ambiente:\n\n*   **Tranquila pero con opciones:** isla grande, varios restaurantes y espacio de sobra, pero sin animación.\n*   **Con ambiente:** música al atardecer, bares animados y más vida. Suele haber más familias con niños.\n\n---\n\n### 📅 Ojo con la temporada\nEn temporada alta (Navidad, Semana Santa, verano europeo) todos los resorts están más llenos y animados; en temporada baja, más tranquilos."
+          text: "En Maldivas, el tamaño de la isla define vuestra experiencia de viaje.\n\n---\n\n### 🏝️ Islas pequeñas\nSe recorren fácilmente a pie en menos de 10-15 minutos.\n\n✅ **A favor:** Intimidad total, sensación de 'náufrago' y libertad de no depender de transporte.\n\n❌ **En contra:** Menos variedad de restaurantes e instalaciones. A veces pueden resultar algo claustrofóbicas.\n\n---\n\n### 🚲 Islas grandes\nEs habitual moverse en bicicleta o buggy para llegar a los distintos puntos de la isla.\n\n✅ **A favor:** Mucha selva para explorar, gran variedad de restaurantes, bares y actividades.\n\n❌ **En contra:** Menos sensación de aislamiento. No todos los resorts ofrecen bicis (dependerás de llamar a un buggy).\n\n---\n\n### 🎉 Resorts con mucha vida\nSon muy pocos, tipo Siyam World o Kandima: islas enormes con muchísimos restaurantes y bares, fiestas, DJ y un programa de actividades y entretenimiento todo el año. Suele haber bastantes familias con niños.\n\n---\n\n### 📅 Ojo con la temporada\nEl ambiente depende más de la fecha que del resort. En temporada alta (Navidad, Semana Santa, verano europeo) todos los resorts están más llenos y hay más eventos; en temporada baja, incluso los resorts grandes están muy tranquilos."
         },
         options: [
-          { id: 'A', label: "Íntima y tranquila", description: "Isla pequeña que se recorre a pie. Pocas villas, paz y sensación de 'náufrago'." },
-          { id: 'B', label: "Tranquila pero con opciones", description: "Isla más grande, con varios restaurantes y espacio de sobra, sin animación." },
-          { id: 'C', label: "Con ambiente", description: "Isla grande con bares, música al atardecer y más vida. Suele haber más familias con niños." },
+          { id: 'A', label: "Íntima", description: "Isla pequeña que se recorre a pie en pocos minutos. Pocas villas y mucha paz." },
+          { id: 'B', label: "Grande y con opciones", description: "Varios restaurantes y bares, piscinas, spa, deportes y espacio para pasear o ir en bici." },
+          { id: 'C', label: "Con mucha vida (tipo Siyam World)", description: "Isla enorme con muchísimos restaurantes y bares, fiestas, DJ y actividades todo el año. Suele haber más familias." },
           { id: 'D', label: "Nos da igual", isHighlighted: true }
         ]
       }
@@ -227,7 +227,7 @@ export const STEPS: StepConfig[] = [
         isMultiSelect: true,
         options: [
           { id: 'perfil_foodie', label: "Buffet o dine around" },
-          { id: 'atmosfera_isla', label: "Atmósfera y tamaño de la isla" },
+          { id: 'atmosfera_isla', label: "Tipo de isla" },
           { id: 'experiencia_snorkel', label: "Experiencia de Snorkel" },
           { id: 'avistamiento_fauna', label: "Avistamiento de Fauna grande" },
           { id: 'diseno_habitacion', label: "Diseño de la habitación" },
