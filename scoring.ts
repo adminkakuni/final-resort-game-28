@@ -14,7 +14,7 @@ const scoredQuestions = ['perfil_foodie', 'atmosfera_isla', 'experiencia_snorkel
 
 // Respuestas "sin preferencia": no suman puntos ni cuentan en el máximo
 // (si no, inflan el % de afinidad de todos los resorts por igual).
-const NO_PREFERENCE: Record<string, string[]> = {
+export const NO_PREFERENCE: Record<string, string[]> = {
   atmosfera_isla: ['D'],          // Nos da igual
   avistamiento_fauna: ['A', 'C'], // No especialmente / Nos gustaría, pero no decide el resort
   tipo_animal: ['D'],             // Nos da igual

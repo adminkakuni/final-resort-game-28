@@ -6,7 +6,7 @@ import { OptionCard } from './components/OptionCard';
 import { ProgressBar } from './components/ProgressBar';
 import { ArrowLeft, Check, AlertCircle, ExternalLink, ChevronDown, Info, PhoneCall, Calendar } from 'lucide-react';
 import { RESORTS } from './resorts';
-import { getScoredResorts } from './scoring';
+import { getScoredResorts, NO_PREFERENCE } from './scoring';
 import Markdown from 'react-markdown';
 import { IntroScreen } from './components/screens/IntroScreen';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -338,7 +338,17 @@ export default function App() {
       // Filtros: cada uno con la respuesta que se ha hecho innegociable
       // (ej. "Régimen de comidas: Media Pensión / Pensión Completa"), igual que se ve en la app.
       const rawFilters = currentAnswers['filtros_eliminatorios'];
-      const filterIds = Array.isArray(rawFilters) ? rawFilters : rawFilters ? [rawFilters as string] : [];
+      // Solo los imprescindibles que siguen aplicando (si volvieron atrás y cambiaron la respuesta,
+      // o contestaron "nos da igual", ese imprescindible ya no filtra y no se envía).
+      const filterIds = (Array.isArray(rawFilters) ? rawFilters : rawFilters ? [rawFilters as string] : [])
+        .filter(fId => {
+          if (fId === 'nivel_despreocupacion') return false;
+          const ans = currentAnswers[fId];
+          if (!ans || (Array.isArray(ans) && ans.length === 0)) return false;
+          if (!Array.isArray(ans) && NO_PREFERENCE[fId]?.includes(ans)) return false;
+          if (fId === 'avistamiento_fauna' && currentAnswers['logistica_fauna'] === 'A') return false;
+          return true;
+        });
       if (filterIds.length) {
         mappedAnswers['filtros_eliminatorios'] = filterIds.map(fId => {
           const filterLabel = getOptionLabel('filtros_eliminatorios', fId);
@@ -348,6 +358,8 @@ export default function App() {
           const ansQ = fId === 'avistamiento_fauna' && currentAnswers['tipo_animal'] ? 'tipo_animal' : fId;
           return ans ? `${filterLabel}: ${getOptionLabel(ansQ, ans as string | string[])}` : filterLabel;
         }).join(' · ');
+      } else {
+        mappedAnswers['filtros_eliminatorios'] = '';
       }
 
       // Régimen de comidas como código (mismo que va en el enlace al itinerario)
