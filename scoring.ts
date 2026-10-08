@@ -42,6 +42,24 @@ const franjaOf = (resort: Resort): number => {
   return typeof f === 'number' && f > 0 ? f : 99;
 };
 
+// Best seller de la web (campo RF BEST SELLER de Airtable): 1 si lo es, 0 si no.
+const bestOf = (resort: Resort): number => ((resort as any).bestSeller ? 1 : 0);
+
+// Reparto fijo de los empates que quedan: mismas respuestas → mismo orden (así la pareja que
+// repite el test ve lo mismo), pero respuestas distintas reparten los empates entre resorts,
+// en vez de ganar siempre el que está antes en Airtable.
+const answersKey = (answers: Answers): string =>
+  Object.keys(answers).sort().map(k => {
+    const v = answers[k];
+    return `${k}=${Array.isArray(v) ? [...v].sort().join('+') : v}`;
+  }).join('|');
+const tieHash = (key: string, id: string): number => {
+  let h = 2166136261; // FNV-1a 32 bits
+  const s = `${key}#${id}`;
+  for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return h >>> 0;
+};
+
 // Filtro fijo de régimen: solo resorts que ofrecen el régimen elegido.
 const matchesBoard = (resort: Resort, answers: Answers): boolean => {
   const board = answers['nivel_despreocupacion'];
@@ -81,7 +99,7 @@ const applyFilter = (base: Resort[], priorities: string[], answers: Answers) => 
   return base.filter(resort => priorities.every(qId => resortMeetsPriority(resort, qId, answers)));
 };
 
-// Puntúa y ordena: más afinidad primero; a igual afinidad, el más económico (franja) primero.
+// Puntúa y ordena (ver criterios de orden abajo).
 const scoreList = (list: Resort[], answers: Answers) => {
   const active = scoredQuestions.filter(q => counts(q, answers));
   const maxScore = active.length || 1; // evita división por cero
@@ -102,7 +120,14 @@ const scoreList = (list: Resort[], answers: Answers) => {
     return { ...resort, score, percentage, matches };
   });
 
-  scored.sort((a, b) => b.score - a.score || franjaOf(a) - franjaOf(b));
+  // Orden: 1) más afinidad, 2) más económico (FRANJA PRECIO), 3) best seller de la web,
+  // 4) reparto fijo según las respuestas (nunca el orden de las filas de Airtable).
+  const key = answersKey(answers);
+  scored.sort((a, b) =>
+    b.score - a.score
+    || franjaOf(a) - franjaOf(b)
+    || bestOf(b) - bestOf(a)
+    || tieHash(key, a.id) - tieHash(key, b.id));
   return scored;
 };
 

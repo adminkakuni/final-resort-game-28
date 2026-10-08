@@ -191,6 +191,22 @@ export default function App() {
 
   const visibleQuestions = currentStepConfig.questions?.filter(q => isQuestionVisible(q.id));
 
+  // Pantallas cuyas preguntas dependen todas de una respuesta anterior (p. ej. "¿Qué animal?"
+  // solo si la fauna es prioridad): si ninguna aplica, la pantalla se salta al avanzar y al volver.
+  const findQuestion = (id: string): any =>
+    STEPS.flatMap(st => st.questions || []).find(q => q.id === id);
+  const isVisibleWith = (q: any, answers: Record<string, string | string[]>): boolean => {
+    if (!q?.dependsOn) return true;
+    if (answers[q.dependsOn.questionId] !== q.dependsOn.optionId) return false;
+    const parent = findQuestion(q.dependsOn.questionId);
+    return parent ? isVisibleWith(parent, answers) : true;
+  };
+  const isStepSkipped = (idx: number, answers: Record<string, string | string[]>): boolean => {
+    const st = STEPS[idx];
+    if (!st || st.type !== StepType.QUESTIONS || !st.questions?.length) return false;
+    return st.questions.every(q => !isVisibleWith(q, answers));
+  };
+
   // Helper to get total visible steps (approximate for UI)
   const totalSteps = STEPS.length - 1; // Excluding Intro
 
@@ -475,14 +491,21 @@ export default function App() {
       });
     }
 
-    // Move to next step
-    setState(prev => ({ ...prev, answers: currentAnswers, stepIndex: prev.stepIndex + 1 }));
+    // Move to next step (saltando las pantallas que no aplican, y borrando sus respuestas)
+    let nextIdx = state.stepIndex + 1;
+    while (nextIdx < STEPS.length - 1 && isStepSkipped(nextIdx, currentAnswers)) {
+      STEPS[nextIdx].questions?.forEach(q => { delete currentAnswers[q.id]; });
+      nextIdx++;
+    }
+    setState(prev => ({ ...prev, answers: currentAnswers, stepIndex: nextIdx }));
   };
 
   const handleBack = () => {
     if (state.stepIndex === 0) return;
     setValidationError(null);
-    setState(prev => ({ ...prev, stepIndex: prev.stepIndex - 1 }));
+    let prevIdx = state.stepIndex - 1;
+    while (prevIdx > 0 && isStepSkipped(prevIdx, state.answers)) prevIdx--;
+    setState(prev => ({ ...prev, stepIndex: prevIdx }));
   };
 
   const handleContactChange = (field: keyof ContactInfo, value: string | boolean) => {

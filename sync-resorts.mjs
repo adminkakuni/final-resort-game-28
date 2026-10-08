@@ -26,6 +26,7 @@ const F = {
   rfNombre:  'fldw580VAi7JR9k96', // RF NOMBRE: solo para excepciones
   rfFoto:    'fldWAFiJVHSwkHaDg',
   franja:    'fldpcFolK9CfJzPJj', // FRANJA PRECIO (€ … €€€€)
+  bestSeller:'fldLrzHZL32FWlwYn', // RF BEST SELLER (igual que la web)
 };
 
 // Campo de Airtable -> clave en resorts.ts. Los 8 primeros son obligatorios.
@@ -121,6 +122,7 @@ for (const r of choosen) {
     name: (r.fields[F.rfNombre] || '').trim() || nombreFicha,
     imageUrl: foto,
     franja: franjaNum(r.fields[F.franja]),
+    bestSeller: r.fields[F.bestSeller] === true,
     ...criterios,
   });
 }
@@ -141,6 +143,7 @@ const cuerpo = resorts.map((r) => `  {
     name: "${esc(r.name)}",
     imageUrl: "${esc(r.imageUrl)}",
     franja: ${r.franja},
+    bestSeller: ${r.bestSeller},
     nivel_despreocupacion: ${JSON.stringify(r.nivel_despreocupacion)},
     perfil_foodie: ${JSON.stringify(r.perfil_foodie)},
     atmosfera_isla: ${JSON.stringify(r.atmosfera_isla)},

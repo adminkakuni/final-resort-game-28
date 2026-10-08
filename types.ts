@@ -75,6 +75,7 @@ export interface Resort {
   name: string;
   imageUrl?: string; // Foto del resort (WP media, versión 768px optimizada para móvil)
   franja?: number; // FRANJA PRECIO de Airtable: € = 1 … €€€€ = 4 (desempate: el más económico primero)
+  bestSeller?: boolean; // RF BEST SELLER de Airtable (los best seller de la web): 2º desempate, tras la franja
   // Matching criteria (arrays of option IDs they satisfy)
   nivel_despreocupacion: string[]; // Eliminatory
   perfil_foodie: string[];

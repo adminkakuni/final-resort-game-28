@@ -85,8 +85,9 @@ export const STEPS: StepConfig[] = [
         title: "¿Qué tipo de isla os imagináis?",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "En Maldivas, el tamaño de la isla define vuestra experiencia de viaje.\n\n---\n\n### 🏝️ Islas pequeñas\nSe recorren fácilmente a pie en menos de 10-15 minutos.\n\n✅ **A favor:** ambiente más íntimo, sensación de 'náufrago' y todo a mano, sin depender de bicis ni buggies.\n\n❌ **En contra:** menos restaurantes y bares entre los que elegir.\n\n---\n\n### 🚲 Islas grandes\nEs habitual moverse en bicicleta o buggy para llegar a los distintos puntos de la isla.\n\n✅ **A favor:** Más espacio y vegetación para explorar, y más restaurantes y bares para ir variando.\n\n❌ **En contra:** Menos sensación de aislamiento. No todos los resorts ofrecen bicis (dependerás de llamar a un buggy).\n\n---\n\n### 🎉 Resorts con mucha vida\nSon muy pocos, tipo Siyam World o Kandima: islas enormes con muchísimos restaurantes y bares, fiestas, DJ y un programa de actividades y entretenimiento todo el año. Suele haber bastantes familias con niños.\n\n---\n\n### 📅 Ojo con la temporada\nEl ambiente depende más de la fecha que del resort. En temporada alta (Navidad, Semana Santa, verano europeo) todos los resorts están más llenos y hay más eventos; en temporada baja, incluso los resorts grandes están muy tranquilos."
+          text: "En Maldivas, el tamaño de la isla define vuestro día a día.\n\n---\n\n### 🏝️ Íntima\nIsla pequeña: se recorre a pie en 10-15 minutos.\n\n✅ **A favor:** ambiente más íntimo, sensación de 'náufrago' y todo a mano, sin depender de bicis ni buggies. Para 3 o 4 noches no agobia nada.\n\n❌ **En contra:** menos restaurantes y bares entre los que elegir.\n\n---\n\n### 🚲 Grande y con opciones\nIsla más grande: para moverse se va en bici o en buggy.\n\n✅ **A favor:** más espacio y vegetación para explorar, y más restaurantes y bares para ir variando.\n\n❌ **En contra:** más huéspedes y más distancias. Los buggies pasan por las estaciones más o menos cada 20 minutos; solo en los resorts con conserje o mayordomo os viene a buscar el buggy a la villa. Y no todos los resorts ofrecen bicis.\n\n---\n\n### 🎉 Con mucha vida\nSon muy pocos, tipo Siyam World o Kandima: islas enormes con muchísimos restaurantes y bares, fiestas, DJ y un programa de actividades y entretenimiento todo el año. Suele haber bastantes familias con niños."
         },
+        warningBox: "📅 **Ojo con la temporada:** el ambiente depende más de la fecha que del resort. En temporada alta (Navidad, Semana Santa y verano europeo) todos los resorts están más llenos y animados; en temporada baja, incluso los resorts grandes están muy tranquilos.",
         options: [
           { id: 'A', label: "Íntima", description: "Isla pequeña que se recorre a pie en pocos minutos. Menos huéspedes y más sensación de estar solos." },
           { id: 'B', label: "Grande y con opciones", description: "Isla más grande, con más restaurantes y bares para ir variando y espacio para pasear o ir en bici. Tranquila, pero con más huéspedes." },
@@ -103,17 +104,16 @@ export const STEPS: StepConfig[] = [
     questions: [
       {
         id: 'avistamiento_fauna',
-        title: "🦈 ¿Ver animales marinos grandes es tan importante como para elegir el resort por eso?",
-        text: "Mantas, tiburón ballena o tiburón nodriza no se ven desde la playa: son excursiones en barco, con coste aparte, a zonas concretas de Maldivas.",
+        title: "🦈 ¿Ver mantas, tiburón ballena o tiburones nodriza es una prioridad del viaje?",
+        text: "No se ven desde la playa: son salidas en barco a zonas concretas de Maldivas. Si es una prioridad, después os preguntamos desde dónde queréis salir a verlos: desde un resort de la zona o desde una isla local.",
         options: [
-          { id: 'A', label: "🙅‍♂️ No especialmente", description: "Con la experiencia del resort (playa, arrecife, ambiente) nos basta." },
-          { id: 'C', label: "🐢 Nos gustaría, pero no a costa de elegir el resort por eso", description: "Si se puede, haremos alguna excursión, pero no es lo que decide el resort." },
-          { id: 'B', label: "🦈 Sí, es lo que más ilusión nos hace", description: "Queremos ver mantas, tiburón ballena o tiburones nodriza, aunque eso limite los resorts." },
+          { id: 'A', label: "🙅‍♂️ No es prioridad", description: "Con la playa, el arrecife y alguna excursión suelta nos basta. Tortugas, peces y tiburones de arrecife se ven desde casi cualquier resort." },
+          { id: 'B', label: "🦈 Sí, es de lo que más ilusión nos hace", description: "Queremos verlos aunque eso condicione dónde dormimos: un resort en la zona o unos días en isla local." },
         ]
       },
       {
         id: 'logistica_fauna',
-        title: "Si vuestra prioridad es ver fauna grande...",
+        title: "¿Desde dónde queréis salir a verlos?",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
           text: "📌 **Nota rápida:** La fauna grande suele concentrarse en zonas muy concretas de Maldivas. Si es una prioridad, deberemos buscar un resort cercano a estas áreas, lo que limitará las opciones disponibles.\n\n⏱️ Estas excursiones desde los resorts tienen un coste adicional y suelen ser bastante más caras que desde las islas locales.\n\n🌴 Desde una isla local hay mucha más flexibilidad y mejores precios para realizar este tipo de excursiones. Además, las islas locales son **el auténtico Maldivas**, aunque hay que entender bien sus inconvenientes antes de decidir. Echa un vistazo a nuestra [guía de isla local y resort](https://kakunitravels.com/isla-local-resort-en-maldivas-luna-de-miel-aventurera/) para conocer todos los pros e inconvenientes."
@@ -123,7 +123,14 @@ export const STEPS: StepConfig[] = [
           { id: 'A', label: "Combinar isla local + resort", chip: "min 6-7 noches", imageUrl: "https://kakunitravels.com/wp-content/uploads/2026/06/isla-local-resort-finder.webp", description: "Queremos hacer las salidas ‘a los spots buenos’ desde una isla local y luego rematar con el relax del resort." },
           { id: 'B', label: "🏝️ Hacer las excursiones desde el resort", description: "Aceptamos precios más elevados por excursión, menos opciones disponibles y un número de resorts más limitado, a cambio de no cambiar de alojamiento." },
         ]
-      },
+      }
+    ]
+  },
+  {
+    id: 'screen-3b-animal',
+    type: StepType.QUESTIONS,
+    title: "Fauna marina",
+    questions: [
       {
         id: 'tipo_animal',
         title: "¿Qué animal os gustaría ver?",
@@ -203,7 +210,7 @@ export const STEPS: StepConfig[] = [
         title: "¿Qué tipo de traslado deseáis?",
         infoBox: {
           title: "INFO PARA DECIDIR MEJOR",
-          text: "[COLUMN_START] 🚤 **Lancha rápida:**\nPara resorts cerca de la capital (Malé).\n\n✅ **A favor:** trayecto corto, la opción más económica y disponible a cualquier hora (ideal si aterrizáis de noche).\n\n❌ **En contra:** zona con más resorts y más movimiento. Con mar movido el trayecto se nota. [COLUMN_BREAK] 🛩️ **Hidroavión:**\nDa acceso a resorts más alejados de la capital.\n\n✅ **A favor:** vistas espectaculares de los atolones desde el aire y acceso a resorts más alejados y tranquilos.\n\n❌ **En contra:** la opción más cara, no vuela de noche (si aterrizáis tarde, toca dormir en Malé) y a veces hay esperas en la terminal. [COLUMN_BREAK] ✈️ **Vuelo doméstico:**\nDa acceso a los resorts más alejados de la capital (Malé).\n\n✅ **A favor:** permite llegar a los atolones más remotos y vírgenes.\n\n❌ **En contra:** requiere traslado adicional en lancha desde el aeropuerto local. [COLUMN_END]"
+          text: "[COLUMN_START] 🚤 **Lancha rápida:**\nPara resorts cerca de la capital (Malé).\n\n✅ **A favor:** trayecto corto y la opción más económica. Os recoge casi a la hora que aterrizáis: en la mayoría de resorts, hasta las 22:00 (algunos, las 24 horas).\n\n❌ **En contra:** zona con más resorts y más movimiento. Con mar movido el trayecto se nota. [COLUMN_BREAK] 🛩️ **Hidroavión:**\nDa acceso a resorts más alejados de la capital.\n\n✅ **A favor:** vistas espectaculares de los atolones desde el aire y acceso a resorts más alejados y tranquilos.\n\n❌ **En contra:** la opción más cara, no vuela de noche (si aterrizáis tarde, toca dormir en Malé) y a veces hay esperas en la terminal. [COLUMN_BREAK] ✈️ **Vuelo doméstico:**\nDa acceso a los resorts más alejados de la capital (Malé).\n\n✅ **A favor:** permite llegar a los atolones más remotos y vírgenes.\n\n❌ **En contra:** requiere traslado adicional en lancha desde el aeropuerto local. [COLUMN_END]"
         },
         warningBox: "⚠️ **Recomendación:** A no ser que os mareéis en lancha rápida, tengáis miedo a los aviones pequeños o busquéis el precio más económico, os recomendamos escoger la opción **'Nos da igual'**. Esto evitará descartar resorts increíbles solo por el tipo de traslado.",
         options: [
@@ -235,11 +242,6 @@ export const STEPS: StepConfig[] = [
         ]
       }
     ]
-  },
-  {
-    id: 'screen-comments',
-    type: StepType.COMMENTS,
-    title: "PETICIONES ESPECIALES"
   },
   {
     id: 'screen-1-contact',
