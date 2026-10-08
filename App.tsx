@@ -328,6 +328,9 @@ export default function App() {
           name: r.name,
           match_percentage: Math.round(r.percentage * 100)
         }));
+      // Ids de PROPIEDADES en orden de match: viajan en el enlace al itinerario (&rf=)
+      // para que allí se vea qué resorts de los suyos entran en el presupuesto.
+      const rfIds = scoredResorts.filter(r => r.percentage >= 0.5).slice(0, 10).map(r => r.id).join(',');
 
       // Map answers to labels for the webhook
       const mappedAnswers = Object.entries(currentAnswers).reduce((acc, [qId, optId]) => {
@@ -397,6 +400,7 @@ export default function App() {
         // Lista completa >= 50%: como array y como texto plano listo para un campo Long Text de Airtable
         all_resorts_50: allMatches,
         all_resorts_50_text: allMatches.map(r => `${r.name} — ${r.match_percentage}%`).join('\n'),
+        rf_ids: rfIds,
         is_final: true
       };
 
@@ -830,7 +834,7 @@ export default function App() {
             // resort_board: régimen de comidas elegido en nivel_despreocupacion (A/B/C)
             const boardMap: Record<string, string> = { A: 'ti_actividades', B: 'ti', C: 'pc' };
             const resortBoard = boardMap[state.answers['nivel_despreocupacion'] as string] || '';
-            const itineraryHref = `https://vuestro-itinerario.kakunitravels.com/?user_name=${encodeURIComponent(state.contact.name)}&user_email=${encodeURIComponent(state.contact.email)}&user_phone=${encodeURIComponent(state.contact.phone)}&trip_motive=${encodeURIComponent(state.contact.trip_motive)}&resort_finder_completed=true&resort_board=${encodeURIComponent(resortBoard)}`;
+            const itineraryHref = `https://vuestro-itinerario.kakunitravels.com/?user_name=${encodeURIComponent(state.contact.name)}&user_email=${encodeURIComponent(state.contact.email)}&user_phone=${encodeURIComponent(state.contact.phone)}&trip_motive=${encodeURIComponent(state.contact.trip_motive)}&resort_finder_completed=true&resort_board=${encodeURIComponent(resortBoard)}&rf=${encodeURIComponent(scoredResorts.filter(r => r.percentage >= 0.5).slice(0, 10).map(r => r.id).join(','))}`;
             const track = (cta: string) => trackCtaClick(cta, state.contact, sessionIdRef.current);
 
             // Compartir con la pareja: el link lleva el session_id del que comparte (ref_session)
