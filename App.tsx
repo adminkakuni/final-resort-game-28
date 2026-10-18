@@ -12,6 +12,16 @@ import { IntroScreen } from './components/screens/IntroScreen';
 import { motion, AnimatePresence } from 'framer-motion';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
+
+// Fechas de viaje: no se pueden elegir meses que ya han pasado.
+const MESES = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+const esMesPasado = (mes?: string, anio?: string): boolean => {
+  if (!mes || !anio) return false;
+  const hoy = new Date();
+  const idx = MESES.findIndex(m => m.toUpperCase() === mes);
+  const y = Number(anio);
+  return y < hoy.getFullYear() || (y === hoy.getFullYear() && idx >= 0 && idx < hoy.getMonth());
+};
 const STORAGE_KEY = 'maldives_quiz_state';
 const SESSION_STORAGE_KEY = 'maldives_quiz_session_id';
 
@@ -290,6 +300,11 @@ export default function App() {
         return;
       }
 
+      if (esMesPasado(state.contact.trip_month, state.contact.trip_year)) {
+        setValidationError("Ese mes ya ha pasado. Elegid un mes a partir de ahora para vuestro viaje.");
+        return;
+      }
+
       // Normalizar email: evita duplicados en el upsert de Airtable (busca por email)
       const emailClean = state.contact.email.trim().toLowerCase();
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -508,6 +523,32 @@ export default function App() {
     setState(prev => ({ ...prev, stepIndex: prevIdx }));
   };
 
+  // Botón atrás del navegador (y gesto atrás de Android/iOS): vuelve al paso anterior
+  // en vez de salir del Resort Finder. Cada paso del quiz deja una entrada en el historial.
+  const backRef = useRef<() => void>(() => {});
+  backRef.current = () => {
+    if (STEPS[state.stepIndex]?.type === StepType.RESULTS) {
+      // En resultados no se vuelve al formulario: atrás sale del juego como haría normalmente
+      const depth = Number(window.history.state?.rfDepth) || 0;
+      if (depth > 0) window.history.go(-depth);
+      return;
+    }
+    handleBack();
+  };
+  useEffect(() => {
+    const onPop = () => backRef.current();
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+  useEffect(() => {
+    if (isLoading) return;
+    const st = STEPS[state.stepIndex];
+    if (state.stepIndex === 0 || !st || st.type === StepType.RESULTS) return;
+    if (window.history.state?.rfStep === state.stepIndex) return;
+    const depth = (Number(window.history.state?.rfDepth) || 0) + 1;
+    window.history.pushState({ ...(window.history.state || {}), rfStep: state.stepIndex, rfDepth: depth }, '');
+  }, [state.stepIndex, isLoading]);
+
   const handleContactChange = (field: keyof ContactInfo, value: string | boolean) => {
     setState(prev => ({
       ...prev,
@@ -536,14 +577,14 @@ export default function App() {
 
   // STANDARD WRAPPER FOR QUESTIONS & CONTACT
   return (
-    <div className="min-h-screen bg-beige-100 flex flex-col relative">
-      <ProgressBar currentStep={state.stepIndex} totalSteps={totalSteps} />
+    <div className="min-h-screen bg-beige-100 flex flex-col relative overflow-x-clip">
+      <ProgressBar currentStep={state.stepIndex} totalSteps={totalSteps} onBack={handleBack} />
       <div className={`flex-1 w-full ${currentStepConfig.type === StepType.RESULTS ? 'max-w-6xl' : 'max-w-4xl'} mx-auto px-6 py-20 md:py-24 flex flex-col justify-center`}>
         
         {/* Back Button */}
         <button 
           onClick={handleBack}
-          className="absolute top-[4.5rem] md:top-20 left-4 md:left-auto md:-ml-16 p-2 text-gray-400 hover:text-gray-900 transition-colors group z-20"
+          className="hidden md:block absolute md:top-20 md:left-auto md:-ml-16 p-2 text-gray-400 hover:text-gray-900 transition-colors group z-20"
           aria-label="Volver al paso anterior"
         >
           <ArrowLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
@@ -965,8 +1006,9 @@ export default function App() {
                   transition={{ delay: 0.8 }}
                   className="text-center"
                 >
+                  {/* 18/10/2026: el contador enseña los mismos que luego se ven y se mandan (1 visible + hasta 4 por WhatsApp, máx. 5); antes decía «18 muy compatibles» y «4 más» a la vez */}
                   <div className="inline-flex items-center gap-2 px-6 md:px-8 py-2 md:py-3 bg-white/60 border border-slate-200 rounded-full shadow-sm">
-                    <span className="text-2xl md:text-3xl font-bold text-[#00d1a0]">{perfectMatches + highMatches}</span>
+                    <span className="text-2xl md:text-3xl font-bold text-[#00d1a0]">{totalGood}</span>
                     <span className="text-base md:text-xl text-slate-700 font-medium">Resorts muy compatibles</span>
                   </div>
                 </motion.div>
@@ -1338,16 +1380,28 @@ export default function App() {
                     {/* 1. IDEA DE VIAJE (primera pregunta) — determina si el WhatsApp es obligatorio */}
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">¿Qué idea de viaje tenéis en mente? *</label>
-                        <select
-                            className="w-full p-4 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none transition appearance-none cursor-pointer"
-                            value={state.contact.trip_status || ''}
-                            onChange={(e) => handleContactChange('trip_status', e.target.value)}
-                        >
-                            <option value="">Selecciona una opción</option>
-                            <option value="COLD">Solo buscando inspiración para el futuro</option>
-                            <option value="WARM">Maldivas nos llama mucho pero aún tenemos dudas</option>
-                            <option value="HOT">Tenemos claro que iremos a Maldivas y queremos planificarlo ya</option>
-                        </select>
+                        <div className="grid gap-2" role="radiogroup" aria-label="¿Qué idea de viaje tenéis en mente?">
+                            {[
+                              { v: 'COLD', t: 'Solo buscando inspiración para el futuro' },
+                              { v: 'WARM', t: 'Maldivas nos llama mucho pero aún tenemos dudas' },
+                              { v: 'HOT', t: 'Tenemos claro que iremos a Maldivas y queremos planificarlo ya' },
+                            ].map(o => {
+                              const activo = state.contact.trip_status === o.v;
+                              return (
+                                <button
+                                  key={o.v}
+                                  type="button"
+                                  role="radio"
+                                  aria-checked={activo}
+                                  onClick={() => handleContactChange('trip_status', o.v)}
+                                  className={`w-full text-left p-4 rounded-lg border transition flex items-center gap-3 ${activo ? 'border-gray-900 bg-white ring-2 ring-gray-900' : 'border-gray-300 bg-white hover:border-gray-500'}`}
+                                >
+                                  <span className={`w-4 h-4 rounded-full border-2 flex-shrink-0 ${activo ? 'border-gray-900 bg-gray-900' : 'border-gray-400'}`}></span>
+                                  <span className="text-gray-800 leading-snug">{o.t}</span>
+                                </button>
+                              );
+                            })}
+                        </div>
                     </div>
 
                     {/* 2 y 3. MOTIVO, MES Y AÑO */}
@@ -1375,8 +1429,8 @@ export default function App() {
                                     onChange={(e) => handleContactChange('trip_month', e.target.value)}
                                 >
                                     <option value="">Mes</option>
-                                    {["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"].map(m => (
-                                        <option key={m} value={m.toUpperCase()}>{m}</option>
+                                    {MESES.map(m => (
+                                        <option key={m} value={m.toUpperCase()} disabled={esMesPasado(m.toUpperCase(), state.contact.trip_year)}>{m}</option>
                                     ))}
                                 </select>
                             </div>
@@ -1385,12 +1439,18 @@ export default function App() {
                                 <select
                                     className="w-full p-4 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-900 focus:border-transparent outline-none transition appearance-none cursor-pointer"
                                     value={state.contact.trip_year}
-                                    onChange={(e) => handleContactChange('trip_year', e.target.value)}
+                                    onChange={(e) => {
+                                        const anio = e.target.value;
+                                        handleContactChange('trip_year', anio);
+                                        // Si el mes elegido ya ha pasado en ese año, se borra para que elijan otro
+                                        if (esMesPasado(state.contact.trip_month, anio)) handleContactChange('trip_month', '');
+                                    }}
                                 >
                                     <option value="">Año</option>
-                                    <option value="2026">2026</option>
-                                    <option value="2027">2027</option>
-                                    <option value="2028">2028</option>
+                                    {[0, 1, 2].map(n => {
+                                        const y = String(new Date().getFullYear() + n);
+                                        return <option key={y} value={y}>{y}</option>;
+                                    })}
                                 </select>
                             </div>
                         </div>
@@ -1473,13 +1533,13 @@ export default function App() {
                     </div>
 
                     {/* Reseñas reales de Google — carrusel horizontal, refuerzo de confianza al dar los datos */}
-                    <div className="mt-2 flex overflow-x-auto snap-x snap-mandatory scrollbar-hide -mx-6 px-6 gap-3 pb-1">
+                    <div className="mt-2 flex overflow-x-auto snap-x snap-mandatory scrollbar-hide gap-3 pb-1 max-w-full">
                         {[
                           { text: 'Todo estuvo súper bien organizado desde el primer momento, sin ningún contratiempo y con una planificación impecable.', author: '— Laura, luna de miel en Maldivas' },
                           { text: 'La luna de miel en Tailandia y Maldivas fue simplemente impresionante. Fue un gran acierto combinar estos dos destinos tan diferentes y, a la vez, tan complementarios.', author: '— Enrique, Tailandia + Maldivas' },
                           { text: 'Desde el primer momento Iván nos ha asesorado creando juntos el plan de viaje.', author: '— Martina, luna de miel en Maldivas' },
                         ].map((r, i) => (
-                          <div key={i} className="flex-shrink-0 w-[75vw] sm:w-[340px] snap-center bg-slate-50 border border-slate-100 rounded-xl p-4 flex flex-col gap-1.5">
+                          <div key={i} className="flex-shrink-0 w-[80%] sm:w-[340px] snap-center bg-slate-50 border border-slate-100 rounded-xl p-4 flex flex-col gap-1.5">
                             <span className="text-amber-400 tracking-widest text-sm" aria-hidden="true">★★★★★</span>
                             <p className="text-slate-600 text-sm leading-relaxed italic">“{r.text}”</p>
                             <p className="text-slate-400 text-xs mt-auto">{r.author} · Reseña de Google</p>
